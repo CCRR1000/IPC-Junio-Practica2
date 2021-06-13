@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Memorabilia {
     
@@ -5,27 +6,108 @@ public class Memorabilia {
         Memorabilia m = new Memorabilia();
     }
 
+    Scanner scan = new Scanner(System.in);
+
+    //Clientes
+    final int CANTIDAD_CLIENTES = 30;
+    String[] nombreClientes = new String[CANTIDAD_CLIENTES];
+    int[][] id_tel_clientes = new int[CANTIDAD_CLIENTES][2];
+    boolean[] tienePeliculaPrestado = new boolean[CANTIDAD_CLIENTES];
+
+    //Peliculas
+    final int CANTIDAD_PELICULAS = 30;
+    String[][] nombre_Categoria = new String[CANTIDAD_CLIENTES][20];
+    int[][] id_anio_prestamo = new int[CANTIDAD_CLIENTES][3];
+    boolean[] disponible = new boolean[CANTIDAD_CLIENTES];
+
+    //Prestamos
+    int[][] prestamos = new int[30][3];  // ID Peliculas, ID Clientes, Dias prestamos
+    String[][] pelicula_cliente = new String[30][2];
+
+
+
+
     public Memorabilia() {
-        //Clientes
-        final int CANTIDAD_CLIENTES = 30;
-        String[] nombreClientes = new String[CANTIDAD_CLIENTES];
-        int[][] id_tel_clientes = new int[CANTIDAD_CLIENTES][2];
-        boolean[] tienePeliculaPrestado = new boolean[CANTIDAD_CLIENTES];
 
-        //Peliculas
-        final int CANTIDAD_PELICULAS = 30;
-        String[][] nombre_Categoria = new String[CANTIDAD_CLIENTES][20];
-        int[][] id_anio_prestamo = new int[CANTIDAD_CLIENTES][3];
-        boolean[] disponible = new boolean[CANTIDAD_CLIENTES];
+        //Arreglos para borrar
 
-        //Prestamos
-        int[][] prestamos = new int[30][3];  // ID Peliculas, ID Clientes, Dias prestamos
-        String[][] pelicula_cliente = new String[30][2];
+        nombre_Categoria[0][0] = "Rapido y Furioso";
+        nombre_Categoria[0][1] = "Accion";
+        nombre_Categoria[1][0] = "El Senior de los Anillos";
+        nombre_Categoria[1][1] = "Ciencia Ficcion";
+        nombre_Categoria[2][0] = "Kung Fu Panda";
+        nombre_Categoria[2][1] = "Comedia";
+        nombre_Categoria[3][0] = "Star Wars";
+        nombre_Categoria[3][1] = "Ciencia Ficcion";
+        id_anio_prestamo[0][0] = 1;
+        id_anio_prestamo[0][1] = 1995;
+        id_anio_prestamo[0][2] = 0;
+        id_anio_prestamo[1][0] = 2;
+        id_anio_prestamo[1][1] = 1998;
+        id_anio_prestamo[1][2] = 0;
+        id_anio_prestamo[2][0] = 3;
+        id_anio_prestamo[2][1] = 2000;
+        id_anio_prestamo[2][2] = 0;
+        id_anio_prestamo[3][0] = 4;
+        id_anio_prestamo[3][1] = 1980;
+        id_anio_prestamo[3][2] = 0;
 
+disponible [0] = true;
+disponible [1] = false;
+disponible [2] = true;
+disponible [3] = true;
 
+        
+        iniciarMenu();
+    }
+
+    public void iniciarMenu() {
+
+ /*       System.out.println("\nMenu");
+        System.out.println("1.Prestamos de Peliculas");
+        System.out.println("2.");
+        System.out.println("3.");
+        System.out.println("4.");
+        System.out.println("5.");
+        System.out.println("6.");
+        System.out.println("7.");
+        System.out.println("8.");
+        System.out.println("9.");
+        System.out.print("Escribe el numero de la opcion que eliges: ");
+        int opcion = scan.nextInt();
+*/
+        prestamoPeliculas();
 
     }
 
+    public void prestamoPeliculas() {
+
+        imprimirPeliculas();
+    }
+
+    public void imprimirPeliculas(){
+
+        System.out.println("Peliculas");
+
+        for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+            //if (id_anio_prestamo[i][0] != 0 && disponible[i]==true) {
+            if (id_anio_prestamo[i][0] != 0) {
+                System.out.println((i+1)+".  ID: "+id_anio_prestamo[i][0]+",   Nombre: "+nombre_Categoria[i][0]+",   Anio: "+id_anio_prestamo[i][1]+",   Categoria: "+nombre_Categoria[i][1]+",   Estado: "+estadoPelicula(disponible[i]));
+            }
+        }
+
+    }
+
+    public String estadoPelicula(boolean estado) {
+        String estadoPelicula;
+
+        if (estado == true) {
+            estadoPelicula = "Disponible";
+        } else {
+            estadoPelicula = "Prestada";
+        }
+        return estadoPelicula;
+    }
             /*
         •	Préstamo de películas: Para esto debe mostrar las películas disponibles y tomar que el cliente solo puede prestar una película a la vez. Si el cliente la acepta guardar en la tabla de préstamo la cantidad de días. El cliente cambia de estado y la película también como no disponible.
 
