@@ -29,7 +29,7 @@ public class Memorabilia {
 
     public Memorabilia() {
 
-        //Arreglos para borrar
+        iniciarMenu();
 
         nombre_Categoria[0][0] = "Rapido y Furioso";
         nombre_Categoria[0][1] = "Accion";
@@ -64,7 +64,7 @@ public class Memorabilia {
         categorias[3] = "Terror";
         categorias[4] = "Romantica";
 
-        iniciarMenu();
+        //iniciarMenu();
     }
 
     public void iniciarMenu() {
