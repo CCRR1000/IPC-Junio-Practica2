@@ -29,8 +29,6 @@ public class Memorabilia {
 
     public Memorabilia() {
 
-        iniciarMenu();
-
         nombre_Categoria[0][0] = "Rapido y Furioso";
         nombre_Categoria[0][1] = "Accion";
         nombre_Categoria[1][0] = "El Senior de los Anillos";
@@ -64,25 +62,62 @@ public class Memorabilia {
         categorias[3] = "Terror";
         categorias[4] = "Romantica";
 
-        //iniciarMenu();
+        iniciarMenu();
     }
 
     public void iniciarMenu() {
 
- /*       System.out.println("\nMenu");
-        System.out.println("1.Prestamos de Peliculas");
-        System.out.println("2.");
-        System.out.println("3.");
-        System.out.println("4.");
-        System.out.println("5.");
-        System.out.println("6.");
-        System.out.println("7.");
-        System.out.println("8.");
-        System.out.println("9.");
+        System.out.println("\nMenu");
+        System.out.println("1. Prestamo de Peliculas");
+        System.out.println("2. Devolucion de Peliculas");
+        System.out.println("3. Mostrar Peliculas");
+        System.out.println("4. Ingreso de Peliculas");
+        System.out.println("5. Ordenar las Peliculas Alfabeticamente");
+        System.out.println("6. Ingresar Clientes Nuevos");
+        System.out.println("7. Mostrar Clientes");
+        System.out.println("8. Reportes");
+        System.out.println("9. Salir");
         System.out.print("Escribe el numero de la opcion que eliges: ");
         int opcion = scan.nextInt();
-*/
-        prestamoPeliculas();
+
+        switch (opcion) {
+            case 1:
+                prestamoPeliculas();
+                break;
+            case 2:
+            //devolucionPeliculas    
+            break;
+            case 3:
+                
+            break;
+            case 4:
+                
+            break;
+            case 5:
+                
+            break;
+            case 6:
+                
+            break;
+            case 7:
+                
+            break;
+            case 8:
+                
+            break;
+            case 9:
+                
+            break;
+
+            default:
+                break;
+        }
+
+
+
+
+
+        
 
     }
 
@@ -267,7 +302,7 @@ public class Memorabilia {
         int numCliente = scan.nextInt();
 
         if (tienePeliculaPrestado[numCliente-1] == false) {
-            imprimirPeliculasDisponibles();
+            mostrarPeliculas("Peliculas Disponibles");
             System.out.println("\nEscriba el numero de la pelicula: ");
             int numPelicula = scan.nextInt();
             System.out.print("Escriba numero de dias a prestar: ");
@@ -305,56 +340,43 @@ public class Memorabilia {
 
         for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
             if (nombreClientes[i] != null) {
-                System.out.println((i+1)+".  ID: "+id_tel_clientes[i][0]+",   Nombre: "+nombreClientes[i]+",   Telefono: "+id_tel_clientes[i][1]+",  Estado de Prestamo: "+estadoCliente(tienePeliculaPrestado[i]));
+                System.out.println((i+1)+".  ID: "+id_tel_clientes[i][0]+",   Nombre: "+nombreClientes[i]+",   Telefono: "+id_tel_clientes[i][1]+",  Estado de Prestamo: " + asignarEstado(tienePeliculaPrestado[i], "Activo", "No Activo"));
             }
         }
     }
 
-    public String estadoCliente(boolean estado) {
-        String estadoCliente;
+    public String asignarEstado(boolean estado, String verdadero, String falso) {
+        String estadoR;
 
         if (estado == true) {
-            estadoCliente = "Activo";
+            estadoR = verdadero;
         } else {
-            estadoCliente = "No activo";
+            estadoR = falso;
         }
-        return estadoCliente;
+        return estadoR;
     }
 
+    public void mostrarPeliculas(String nPelis){
 
-    public void imprimirPeliculasDisponibles(){
+        if (nPelis == "Peliculas") {
+            System.out.println("\n"+nPelis+"\n");
+            for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+                if (id_anio_prestamo[i][0] != 0) {
+                    System.out.println((i+1)+".  ID: "+id_anio_prestamo[i][0]+",   Nombre: "+nombre_Categoria[i][0]+",   Anio: "+id_anio_prestamo[i][1]+",   Categoria: "+nombre_Categoria[i][1]+",   Estado: "+ asignarEstado(disponible[i], "Disponible", "Prestada"));
+                }
+            }
 
-        System.out.println("Peliculas Disponibles");
-
-        for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
-            if (id_anio_prestamo[i][0] != 0 && disponible[i]==true) {            
-                System.out.println((i+1)+".  ID: "+id_anio_prestamo[i][0]+",   Nombre: "+nombre_Categoria[i][0]+",   Anio: "+id_anio_prestamo[i][1]+",   Categoria: "+nombre_Categoria[i][1]);
+        } 
+        
+        else if (nPelis == "Peliculas Disponibles") {
+            System.out.println("\n"+nPelis+"\n");
+            for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+                if (id_anio_prestamo[i][0] != 0 && disponible[i]==true) {            
+                    System.out.println((i+1)+".  ID: "+id_anio_prestamo[i][0]+",   Nombre: "+nombre_Categoria[i][0]+",   Anio: "+id_anio_prestamo[i][1]+",   Categoria: "+nombre_Categoria[i][1]);
+                }
             }
         }
 
-    }
-
-    public void mostrarTodasPeliculas(){
-
-        System.out.println("Peliculas");
-
-        for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
-            if (id_anio_prestamo[i][0] != 0) {
-                System.out.println((i+1)+".  ID: "+id_anio_prestamo[i][0]+",   Nombre: "+nombre_Categoria[i][0]+",   Anio: "+id_anio_prestamo[i][1]+",   Categoria: "+nombre_Categoria[i][1]+",   Estado: "+estadoPelicula(disponible[i]));
-            }
-        }
-
-    }
-
-    public String estadoPelicula(boolean estado) {
-        String estadoPelicula;
-
-        if (estado == true) {
-            estadoPelicula = "Disponible";
-        } else {
-            estadoPelicula = "Prestada";
-        }
-        return estadoPelicula;
     }
 
 
