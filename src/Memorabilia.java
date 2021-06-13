@@ -9,21 +9,21 @@ public class Memorabilia {
     Scanner scan = new Scanner(System.in);
 
     //Clientes
-    final int CANTIDAD_CLIENTES = 30;
-    String[] nombreClientes = new String[CANTIDAD_CLIENTES];
-    int[][] idClnt_Tel = new int[CANTIDAD_CLIENTES][2];
-    boolean[] tienePeliculaPrestado = new boolean[CANTIDAD_CLIENTES];
+    final int CANTIDAD_CLIENTES = 30; 
+    String[] nombreClientes = new String[CANTIDAD_CLIENTES]; // Nombre de los clientes
+    int[][] idClnt_Tel = new int[CANTIDAD_CLIENTES][2]; // ID Clientes, Teléfono
+    boolean[] tienePeliculaPrestado = new boolean[CANTIDAD_CLIENTES]; // Tiene un préstamo activo
 
-    //Peliculas
+    //Películas
     final int CANTIDAD_PELICULAS = 30;
-    String[][] nombrePel_Categoria = new String[CANTIDAD_CLIENTES][2];
-    int[][] idPel_Anio_Prestamo = new int[CANTIDAD_CLIENTES][3];
-    boolean[] disponible = new boolean[CANTIDAD_CLIENTES];
-    String[] categoriasPelis = new String[5];
+    String[][] nombrePel_Categoria = new String[CANTIDAD_CLIENTES][2]; //Nombre Películas, Categoría
+    int[][] idPel_Anio_Prestamo = new int[CANTIDAD_CLIENTES][3]; // ID Películas, Año, Cantidad de Préstamos
+    boolean[] disponible = new boolean[CANTIDAD_CLIENTES]; // Disponibilidad de Préstamo
+    String[] categoriasPelis = new String[5]; // Todas las categorías
 
-    //Prestamos
-    int[][] prestamos = new int[30][3];  // ID Peliculas, ID Clientes, Dias prestamos
-    String[][] pelicula_cliente = new String[30][2];
+    //Préstamos
+    int[][] prestamos = new int[30][3];  // ID Películas, ID Clientes, Número de días que se prestará
+    String[][] pelicula_cliente = new String[30][2]; // Nombre Películas, Nombre Cliente;
 
 
 
@@ -97,7 +97,7 @@ public class Memorabilia {
                     //ingresarPeliculas();
                     break;
                 case 5:
-                    ordenarNombres();
+                    ordenarNombresPeliculas();
                     mostrarPeliculas("Peliculas");
                     break;
                 case 6:
@@ -296,14 +296,45 @@ public class Memorabilia {
             }
         }
     }
-
-    public void ordenarNombres() {
+/**
+ * String[] nombreClientes = new String[CANTIDAD_CLIENTES]; // Nombre de los clientes
+ * int[][] idClnt_Tel = new int[CANTIDAD_CLIENTES][2]; // ID Clientes, Teléfono
+ * boolean[] tienePeliculaPrestado = new boolean[CANTIDAD_CLIENTES]; // Tiene un préstamo activo
+ * 
+ * String[][] nombrePel_Categoria = new String[CANTIDAD_CLIENTES][2]; //Nombre Películas, Categoría
+ * int[][] idPel_Anio_Prestamo = new int[CANTIDAD_CLIENTES][3]; // ID Películas, Año, Cantidad de Préstamos
+ * boolean[] disponible = new boolean[CANTIDAD_CLIENTES]; // Disponibilidad de Préstamo
+ * String[] categoriasPelis = new String[5]; // Todas las categorías
+ * 
+ */
+    public void ordenarNombresPeliculas() {
         for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
             for (int j = 0; j < CANTIDAD_CLIENTES-1; j++) {
                 if ((nombrePel_Categoria[j][0]!=null)&&(nombrePel_Categoria[j+1][0]!=null)&&(nombrePel_Categoria[j][0].compareToIgnoreCase(nombrePel_Categoria[j+1][0])>0)) {
                     String auxiliar = nombrePel_Categoria[j][0];
                     nombrePel_Categoria[j][0] = nombrePel_Categoria[j+1][0];
                     nombrePel_Categoria[j+1][0] = auxiliar;
+
+                    auxiliar = nombrePel_Categoria[j][1];
+                    nombrePel_Categoria[j][1] = nombrePel_Categoria[j+1][1];
+                    nombrePel_Categoria[j+1][1] = auxiliar;
+
+                    int auxi = idPel_Anio_Prestamo[j][0];
+                    idPel_Anio_Prestamo[j][0] = idPel_Anio_Prestamo[j+1][0];
+                    idPel_Anio_Prestamo[j+1][0] = auxi;
+
+                    auxi = idPel_Anio_Prestamo[j][1];
+                    idPel_Anio_Prestamo[j][1] = idPel_Anio_Prestamo[j+1][1];
+                    idPel_Anio_Prestamo[j+1][1] = auxi;
+
+                    auxi = idPel_Anio_Prestamo[j][2];
+                    idPel_Anio_Prestamo[j][2] = idPel_Anio_Prestamo[j+1][2];
+                    idPel_Anio_Prestamo[j+1][2] = auxi;
+
+                    boolean aux = disponible[j];
+                    disponible[j] = disponible[j+1];
+                    disponible[j+1] = aux;
+
                 }
             }
         }
@@ -405,6 +436,11 @@ public class Memorabilia {
     }
 
     public void devolucionPeliculas() {
+        /*
+            //Préstamos
+            int[][] prestamos = new int[30][3];  // ID Películas, ID Clientes, Número de días que se prestará
+            String[][] pelicula_cliente = new String[30][2]; // Nombre Películas, Nombre Cliente;
+        */
         for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
             if (disponible[i] == true) {
                 System.out.println("Nombre: " + nombrePel_Categoria[i][0] + " Cliente: " + nombreClientes[i] + " ID CLIENTE: "
