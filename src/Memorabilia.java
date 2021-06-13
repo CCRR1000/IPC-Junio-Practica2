@@ -19,12 +19,11 @@ public class Memorabilia {
     String[][] nombre_Categoria = new String[CANTIDAD_CLIENTES][2];
     int[][] id_anio_prestamo = new int[CANTIDAD_CLIENTES][3];
     boolean[] disponible = new boolean[CANTIDAD_CLIENTES];
-    String[] categorias = new String[10];
+    String[] categorias = new String[5];
 
     //Prestamos
     int[][] prestamos = new int[30][3];  // ID Peliculas, ID Clientes, Dias prestamos
     String[][] pelicula_cliente = new String[30][2];
-
 
 
 
@@ -40,6 +39,7 @@ public class Memorabilia {
         nombre_Categoria[2][1] = "Comedia";
         nombre_Categoria[3][0] = "Star Wars";
         nombre_Categoria[3][1] = "Ciencia Ficcion";
+
         id_anio_prestamo[0][0] = 1;
         id_anio_prestamo[0][1] = 1995;
         id_anio_prestamo[0][2] = 0;
@@ -61,7 +61,8 @@ public class Memorabilia {
         categorias[0] = "Accion";
         categorias[1] = "Ciencia Ficcion";
         categorias[2] = "Comedia";        
-        categorias[3] = "Terror";        
+        categorias[3] = "Terror";
+        categorias[4] = "Romantica";
 
         iniciarMenu();
     }
@@ -89,8 +90,7 @@ public class Memorabilia {
 
         System.out.print("\nIngrese el nombre de la pelicula: ");
         String nombrePelicula = scan.nextLine();
-        System.out.print("\nIngrese la categoria de la pelicula: ");
-        String categoria = scan.nextLine();
+        String categoria = asignarCategoria();
         System.out.print("\nIngrese el anio de la pelicula: ");
         int anioPelicula = scan.nextInt();
 
@@ -110,6 +110,143 @@ public class Memorabilia {
 
     }
 
+    public String asignarCategoria() {
+
+        System.out.println("\nSeleccione una categoria");
+
+        for (int i = 0; i < categorias.length; i++) {
+            System.out.println((i+1)+". "+categorias[i]);
+        }
+
+        System.out.print("Escriba el numero de la categoria: ");
+        int indPelicula = scan.nextInt();
+        
+        return categorias[indPelicula-1];
+    }
+
+    public void reportes() {
+        /*
+        Reportes:
+            ○ Cantidad de películas por categoría (puede crear una tabla para llevar el
+            control de las categorías)
+            ○ Las películas de una categoría en específico.
+            ○ Reporte de las películas y la cantidad de veces que se presta
+            ○ Reporte de la película más prestada
+            ○ Reporte de la película menos prestada
+        */
+        System.out.println("\nREPORTES");
+        System.out.println("1. Cantidad de Peliculas por Categoria");
+        System.out.println("2. Peliculas por Categoria");
+        System.out.println("3. Cantidad de Prestamos por Pelicula");
+        System.out.println("4. Pelicula Mas Prestada y Pelicula Menos Prestada");
+        int opcionReporte = scan.nextInt();
+
+        switch (opcionReporte) {
+            case 1:
+                System.out.println("\nCantidad de Peliculas por Categoria");
+                int[] contadores = new int[5];
+                contadoresCategorias(contadores);
+                break;
+            case 2:
+                System.out.println("\nPeliculas por Categoria");
+                buscarCategoriaEspecifica();   
+                break;
+            case 3:
+                System.out.println("\nCantidad de Prestamos por Pelicula");
+                //imprimir con un for nombre de pelicula y numero de prestamos
+                mostrarPrestamosPorPelicula();
+                break;
+            case 4:
+                String masPrestada = "", menosPrestada = "";
+                manejarCategoria(masPrestada, menosPrestada);
+            
+                System.out.println("\nPelicula Mas Prestada: " + masPrestada);
+                // buscar el elemento mayor -for-
+            
+                System.out.println("\nPelicula Menos Prestada: " + menosPrestada);
+                // buscar el elemento menor -for-
+    
+                break;
+            default:
+                System.out.println("Numero incorrecto");
+                break;
+        }
+
+
+
+    }
+
+    public void buscarCategoriaEspecifica() {
+
+        String categ = asignarCategoria();
+
+        System.out.println("Categoria de Pelicula: "+categ);
+
+        for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+            if (nombre_Categoria[i][1].equals(categ)) {
+                System.out.println(nombre_Categoria[i][1]);
+            }
+        }
+    }
+
+    public void contadoresCategorias(int[] contadores){
+
+        for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+            if (nombre_Categoria[i][1].equals(categorias[0])) {
+                contadores[0]++;
+            } else if (nombre_Categoria[i][1].equals(categorias[1])) {
+                contadores[1]++;
+            } else if (nombre_Categoria[i][1].equals(categorias[2])) {
+                contadores[2]++;
+            } else if (nombre_Categoria[i][1].equals(categorias[3])) {
+                contadores[3]++;
+            } else if (nombre_Categoria[i][1].equals(categorias[4])) {
+                contadores[4]++;
+            }
+        }
+
+        for (int i = 0; i < contadores.length; i++) {
+            System.out.println();
+            System.out.println(categorias[i]+":   "+contadores[i]);
+        }
+
+    }
+
+    public void mostrarPrestamosPorPelicula() {
+        for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+            if (nombre_Categoria[i][0] != null) {
+                System.out.println("Pelicula: "+nombre_Categoria[i][0]+"   Prestamos: "+id_anio_prestamo[i][2]);
+            }
+        }
+    }
+
+    public void manejarCategoria(String masPrestada, String menosPrestada) {
+        int mayor=0, menor=100;
+
+        for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+            if (id_anio_prestamo[i][2]>mayor) {
+                mayor = id_anio_prestamo[i][2];
+                masPrestada = nombre_Categoria[i][0];
+            }
+
+            if (id_anio_prestamo[i][2]<menor) {
+                menor = id_anio_prestamo[i][2];
+                menosPrestada = nombre_Categoria[i][0];
+            }
+        }
+    }
+
+    public void ordenarString() {
+        for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
+            for (int j = 0; j < CANTIDAD_CLIENTES-1; j++) {
+                if ((nombre_Categoria[j][0]!=null)&&(nombre_Categoria[j+1][0]!=null)&&(nombre_Categoria[j][0].compareToIgnoreCase(nombre_Categoria[j+1][0])>0)) {
+                    String auxiliar = nombre_Categoria[j][0];
+                    nombre_Categoria[j][0] = nombre_Categoria[j+1][0];
+                    nombre_Categoria[j+1][0] = auxiliar;
+                }
+            }
+        }
+    }
 
 
     public int generarIdPeliculas(){
@@ -219,33 +356,6 @@ public class Memorabilia {
         }
         return estadoPelicula;
     }
-
-
-            /*
-        •	Préstamo de películas: Para esto debe mostrar las películas disponibles y tomar que el cliente solo puede prestar una película a la vez. Si el cliente la acepta guardar en la tabla de préstamo la cantidad de días. El cliente cambia de estado y la película también como no disponible.
-
-1.	Public boolean buscar()(películas disponibles)
-2.	Public boolean ClienteFalsoPeliculaPrestado()
-3.	Public void LLenarFilaPrestamo()
-4.	Public void CambiarEstadocliente()
-5.	Public void CambiarEstadoPelicula()
-
-•	Devolución de películas: Para esto debe mostrar las películas prestadas incluyendo nombre de la película y el nombre del cliente. Seleccionar la película a devolver y modificar el estado del cliente y la película, dejando en disponibilidad.
-1.	public void mostrarPeliculasprestadas()(matriz String de préstamos)
-2.	llamar métodos     boolean [][] m = new boolean [filas][columnas];
-3.	matrices boelanas para reconocer si están disponibles
-4.	public void SeleccionarPelicula()
-5.	llamar estadocliente y estadopelicula
-
-•	Mostrar las películas: mostrar todos los datos de las películas.
-1.	Public void imprimir()(nombre categoria año)
-•	Ingreso de Películas: crear nuevas películas, insertarlas al final del arreglo. No se pueden crear dos películas con el mismo id.
-1.	Public void llenarNuevapelicula()
-2.	Public void verificadorIDpelicula()
-•	Ordenar las películas de forma ascendente respecto al nombre.
-
-        */
-
 
 
 }
