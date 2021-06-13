@@ -85,20 +85,20 @@ public class Memorabilia {
                 //prestamoPeliculas();
                 break;
             case 2:
-                //devolucionPeliculas    
+                //devolucionPeliculas();
                 break;
             case 3:
                 //mostrarPeliculas("Peliculas");
                 break;
             case 4:
-                //ingreso peliculas    
+                //ingresarPeliculas();
                 break;
             case 5:
                 //ordenarNombres();
                 //mostrarPeliculas("Peliculas");
                 break;
             case 6:
-                //ingreso clientes
+                //ingresarClientes():
                 break;
             case 7:
                 //mostrar clientes();   
@@ -116,7 +116,36 @@ public class Memorabilia {
 
     }
 
-    public void ingresoPeliculas() {
+    public void ingresarClientes(){
+        System.out.print("Ingrese su nombre: ");
+        String nombre = scan.nextLine();
+        for(int i = 0; i<CANTIDAD_CLIENTES;i++ ){
+            if(nombre != nombreClientes[i] && nombreClientes[i] == null){
+                nombreClientes[i] = nombre;
+                System.out.print("Ingrese su telefono: ");
+                int tel = scan.nextInt();
+                id_tel_clientes[i][1] = tel;
+                int id = generarID();
+                id_tel_clientes[i][0] = id;  
+                tienePeliculaPrestado[i] = false; 
+            }
+
+        }
+
+    }
+
+    public int generarID(){
+        int ID = 0;
+        for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
+        ID = (int)(Math.random()*(999-100)+100);
+           if (id_tel_clientes[i][0]!=ID &&  id_tel_clientes[i][0] == 0) {   
+               break;
+           }
+       }  
+        return ID;
+    }
+
+    public void ingresarPeliculas() {
 
         System.out.print("\nIngrese el nombre de la pelicula: ");
         String nombrePelicula = scan.nextLine();
@@ -373,7 +402,7 @@ public class Memorabilia {
 
     }
 
-    public void Devolucion() {
+    public void devolucionPeliculas() {
         for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
             if (disponible[i] == true) {
                 System.out.println("Nombre: " + nombre_Categoria[i][0] + " Cliente: " + nombreClientes[i] + " ID CLIENTE: "
