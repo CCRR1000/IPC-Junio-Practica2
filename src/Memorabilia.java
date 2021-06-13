@@ -16,9 +16,10 @@ public class Memorabilia {
 
     //Peliculas
     final int CANTIDAD_PELICULAS = 30;
-    String[][] nombre_Categoria = new String[CANTIDAD_CLIENTES][20];
+    String[][] nombre_Categoria = new String[CANTIDAD_CLIENTES][2];
     int[][] id_anio_prestamo = new int[CANTIDAD_CLIENTES][3];
     boolean[] disponible = new boolean[CANTIDAD_CLIENTES];
+    String[] categorias = new String[10];
 
     //Prestamos
     int[][] prestamos = new int[30][3];  // ID Peliculas, ID Clientes, Dias prestamos
@@ -52,12 +53,16 @@ public class Memorabilia {
         id_anio_prestamo[3][1] = 1980;
         id_anio_prestamo[3][2] = 0;
 
-disponible [0] = true;
-disponible [1] = false;
-disponible [2] = true;
-disponible [3] = true;
+        disponible [0] = true;
+        disponible [1] = false;
+        disponible [2] = true;
+        disponible [3] = true;
 
-        
+        categorias[0] = "Accion";
+        categorias[1] = "Ciencia Ficcion";
+        categorias[2] = "Comedia";        
+        categorias[3] = "Terror";        
+
         iniciarMenu();
     }
 
@@ -82,15 +87,81 @@ disponible [3] = true;
 
     public void prestamoPeliculas() {
 
-        imprimirPeliculas();
+        mostrarClientes();
+        System.out.print("Escriba el numero de cliente: ");
+        int numCliente = scan.nextInt();
+
+        if (tienePeliculaPrestado[numCliente-1] == false) {
+            imprimirPeliculasDisponibles();
+            int numPelicula = scan.nextInt();
+            System.out.print("Escriba numero de dias a prestar: ");
+            int numDias = scan.nextInt();
+            realizarPrestamo((numCliente-1),(numPelicula-1), numDias);
+
+        } else {
+            System.out.println("\nEl cliente no puede pedir otra pelicula");
+        }
+        
     }
 
-    public void imprimirPeliculas(){
+    public void realizarPrestamo(int indiceCliente, int indicePelicula, int numeroDias) {
+
+        tienePeliculaPrestado[indiceCliente] = true;
+        disponible[indicePelicula] = false;
+        id_anio_prestamo[indicePelicula][2]++;
+
+        for (int i = 0; i < prestamos.length; i++) {
+            if (prestamos[i][0] == 0) {
+                //no hay nada
+                prestamos[i][0] = id_anio_prestamo[indicePelicula][0];
+                prestamos[i][1] = id_tel_clientes[indiceCliente][0];
+                prestamos[i][2] = numeroDias;
+                
+                pelicula_cliente[i][0] = nombre_Categoria[indicePelicula][0];
+                pelicula_cliente[i][1] = nombreClientes[indiceCliente];
+            }
+        }
+        
+    }
+
+    public void mostrarClientes() {
+
+        for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
+            if (nombreClientes[i] != null) {
+                System.out.println((i+1)+".  ID: "+id_tel_clientes[i][0]+",   Nombre: "+nombreClientes[i]+",   Telefono: "+id_tel_clientes[i][1]+",  Estado de Prestamo: "+estadoCliente(tienePeliculaPrestado[i]));
+            }
+        }
+    }
+
+    public String estadoCliente(boolean estado) {
+        String estadoCliente;
+
+        if (estado == true) {
+            estadoCliente = "Activo";
+        } else {
+            estadoCliente = "No activo";
+        }
+        return estadoCliente;
+    }
+
+
+    public void imprimirPeliculasDisponibles(){
+
+        System.out.println("Peliculas Disponibles");
+
+        for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+            if (id_anio_prestamo[i][0] != 0 && disponible[i]==true) {            
+                System.out.println((i+1)+".  ID: "+id_anio_prestamo[i][0]+",   Nombre: "+nombre_Categoria[i][0]+",   Anio: "+id_anio_prestamo[i][1]+",   Categoria: "+nombre_Categoria[i][1]);
+            }
+        }
+
+    }
+
+    public void mostrarTodasPeliculas(){
 
         System.out.println("Peliculas");
 
         for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
-            //if (id_anio_prestamo[i][0] != 0 && disponible[i]==true) {
             if (id_anio_prestamo[i][0] != 0) {
                 System.out.println((i+1)+".  ID: "+id_anio_prestamo[i][0]+",   Nombre: "+nombre_Categoria[i][0]+",   Anio: "+id_anio_prestamo[i][1]+",   Categoria: "+nombre_Categoria[i][1]+",   Estado: "+estadoPelicula(disponible[i]));
             }
@@ -108,6 +179,8 @@ disponible [3] = true;
         }
         return estadoPelicula;
     }
+
+
             /*
         •	Préstamo de películas: Para esto debe mostrar las películas disponibles y tomar que el cliente solo puede prestar una película a la vez. Si el cliente la acepta guardar en la tabla de préstamo la cantidad de días. El cliente cambia de estado y la película también como no disponible.
 
