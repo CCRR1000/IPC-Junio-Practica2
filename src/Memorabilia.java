@@ -82,42 +82,37 @@ public class Memorabilia {
 
         switch (opcion) {
             case 1:
-                prestamoPeliculas();
+                //prestamoPeliculas();
                 break;
             case 2:
-            //devolucionPeliculas    
-            break;
+                //devolucionPeliculas    
+                break;
             case 3:
-                
-            break;
+                //mostrarPeliculas("Peliculas");
+                break;
             case 4:
-                
-            break;
+                //ingreso peliculas    
+                break;
             case 5:
-                
-            break;
+                //ordenarNombres();
+                //mostrarPeliculas("Peliculas");
+                break;
             case 6:
-                
-            break;
+                //ingreso clientes
+                break;
             case 7:
-                
-            break;
+                //mostrar clientes();   
+                break;
             case 8:
-                
-            break;
+                //reportes();  
+                break;
             case 9:
-                
-            break;
-
+                //salir
+                break;
             default:
+                System.out.println("\nOpcion Incorrecta.\n");
                 break;
         }
-
-
-
-
-
-        
 
     }
 
@@ -271,7 +266,7 @@ public class Memorabilia {
         }
     }
 
-    public void ordenarString() {
+    public void ordenarNombres() {
         for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
             for (int j = 0; j < CANTIDAD_CLIENTES-1; j++) {
                 if ((nombre_Categoria[j][0]!=null)&&(nombre_Categoria[j+1][0]!=null)&&(nombre_Categoria[j][0].compareToIgnoreCase(nombre_Categoria[j+1][0])>0)) {
@@ -282,7 +277,6 @@ public class Memorabilia {
             }
         }
     }
-
 
     public int generarIdPeliculas(){
         int ID = 0;
@@ -315,6 +309,15 @@ public class Memorabilia {
         
     }
 
+    public void mostrarClientes() {
+
+        for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
+            if (nombreClientes[i] != null) {
+                System.out.println((i+1)+".  ID: "+id_tel_clientes[i][0]+",   Nombre: "+nombreClientes[i]+",   Telefono: "+id_tel_clientes[i][1]+",  Estado de Prestamo: " + asignarEstado(tienePeliculaPrestado[i], "Activo", "No Activo"));
+            }
+        }
+    }
+
     public void realizarPrestamo(int indiceCliente, int indicePelicula, int numeroDias) {
 
         tienePeliculaPrestado[indiceCliente] = true;
@@ -335,16 +338,7 @@ public class Memorabilia {
         }
         
     }
-
-    public void mostrarClientes() {
-
-        for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
-            if (nombreClientes[i] != null) {
-                System.out.println((i+1)+".  ID: "+id_tel_clientes[i][0]+",   Nombre: "+nombreClientes[i]+",   Telefono: "+id_tel_clientes[i][1]+",  Estado de Prestamo: " + asignarEstado(tienePeliculaPrestado[i], "Activo", "No Activo"));
-            }
-        }
-    }
-
+    
     public String asignarEstado(boolean estado, String verdadero, String falso) {
         String estadoR;
 
@@ -379,5 +373,24 @@ public class Memorabilia {
 
     }
 
+    public void Devolucion() {
+        for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
+            if (disponible[i] == true) {
+                System.out.println("Nombre: " + nombre_Categoria[i][0] + " Cliente: " + nombreClientes[i] + " ID CLIENTE: "
+                        + id_tel_clientes[i][0]);
+            }
+
+        }
+        System.out.println("Ingrese el ID del cliente");
+        int idcliente = scan.nextInt();
+        for (int i = 0; i < disponible.length; i++) {
+            if (idcliente == id_tel_clientes[i][0]) {
+                disponible[i] = true;
+                tienePeliculaPrestado[i] = false;
+
+            }
+
+        }
+    }
 
 }
