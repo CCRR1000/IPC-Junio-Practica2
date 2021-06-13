@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Memorabilia {
     
@@ -7,6 +7,7 @@ public class Memorabilia {
     }
 
     Scanner scan = new Scanner(System.in);
+    Random random = new Random();
 
     //Clientes
     final int CANTIDAD_CLIENTES = 30; 
@@ -19,7 +20,8 @@ public class Memorabilia {
     String[][] nombrePel_Categoria = new String[CANTIDAD_CLIENTES][2]; //Nombre Películas, Categoría
     int[][] idPel_Anio_Prestamo = new int[CANTIDAD_CLIENTES][3]; // ID Películas, Año, Cantidad de Préstamos
     boolean[] disponible = new boolean[CANTIDAD_CLIENTES]; // Disponibilidad de Préstamo
-    String[] categoriasPelis = new String[5]; // Todas las categorías
+        //Categorías de Películas
+        String[] categoriasPelis = new String[5]; // Todas las categorías
 
     //Préstamos
     int[][] prestamos = new int[30][3];  // ID Películas, ID Clientes, Número de días que se prestará
@@ -130,21 +132,21 @@ public class Memorabilia {
                 nombreClientes[i] = cliente;
                 System.out.print("Ingrese su telefono: ");
                 idClnt_Tel[i][1] = scan.nextInt();
-                idClnt_Tel[i][0] = generarID();  
+                idClnt_Tel[i][0] = generarID(99999, 10000);  
                 tienePeliculaPrestado[i] = false; 
             }
         }
     }
 
-    public int generarID(){
-        int ID = 0;
+    public int generarID(int valorMaximo, int valorMinimo){
+        int idAleatorio = 0;
         for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
-        ID = (int)(Math.random()*(999-100)+100);
-           if (idClnt_Tel[i][0]!=ID &&  idClnt_Tel[i][0] == 0) {   
+        idAleatorio = random.nextInt(valorMaximo-valorMinimo+1) + valorMinimo;
+           if (idClnt_Tel[i][0]!=idAleatorio &&  idClnt_Tel[i][0] == 0) {   
                break;
            }
        }  
-        return ID;
+        return idAleatorio;
     }
 
     public void ingresarPeliculas() {
@@ -157,17 +159,15 @@ public class Memorabilia {
 
         for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
             if (nombrePel_Categoria[i][0]==null) {
-
                 nombrePel_Categoria[i][0] = nombrePelicula;
                 nombrePel_Categoria[i][1] = categoria;
-                idPel_Anio_Prestamo[i][0] = generarIdPeliculas();
+                idPel_Anio_Prestamo[i][0] = generarID(999, 100);
                 idPel_Anio_Prestamo[i][1] = anioPelicula;
                 idPel_Anio_Prestamo[i][2] = 0;
                 disponible[i] = true;
                 break;
             }
-        }
-        
+        }      
 
     }
 
@@ -296,17 +296,7 @@ public class Memorabilia {
             }
         }
     }
-/**
- * String[] nombreClientes = new String[CANTIDAD_CLIENTES]; // Nombre de los clientes
- * int[][] idClnt_Tel = new int[CANTIDAD_CLIENTES][2]; // ID Clientes, Teléfono
- * boolean[] tienePeliculaPrestado = new boolean[CANTIDAD_CLIENTES]; // Tiene un préstamo activo
- * 
- * String[][] nombrePel_Categoria = new String[CANTIDAD_CLIENTES][2]; //Nombre Películas, Categoría
- * int[][] idPel_Anio_Prestamo = new int[CANTIDAD_CLIENTES][3]; // ID Películas, Año, Cantidad de Préstamos
- * boolean[] disponible = new boolean[CANTIDAD_CLIENTES]; // Disponibilidad de Préstamo
- * String[] categoriasPelis = new String[5]; // Todas las categorías
- * 
- */
+
     public void ordenarNombresPeliculas() {
         for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
             for (int j = 0; j < CANTIDAD_CLIENTES-1; j++) {
@@ -338,17 +328,6 @@ public class Memorabilia {
                 }
             }
         }
-    }
-
-    public int generarIdPeliculas(){
-        int ID = 0;
-       for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
-        ID = (int)(Math.random()*(100-1)+1);
-           if (idPel_Anio_Prestamo[i][0]!=ID &&  idPel_Anio_Prestamo[i][0] == 0) {   
-               break;
-           }
-       }  
-        return ID;
     }
 
     public void prestamoPeliculas() {
