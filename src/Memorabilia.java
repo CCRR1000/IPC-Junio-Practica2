@@ -85,6 +85,44 @@ public class Memorabilia {
 
     }
 
+    public void ingresoPeliculas() {
+
+        System.out.print("\nIngrese el nombre de la pelicula: ");
+        String nombrePelicula = scan.nextLine();
+        System.out.print("\nIngrese la categoria de la pelicula: ");
+        String categoria = scan.nextLine();
+        System.out.print("\nIngrese el anio de la pelicula: ");
+        int anioPelicula = scan.nextInt();
+
+        for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+            if (nombre_Categoria[i][0]==null) {
+
+                nombre_Categoria[i][0] = nombrePelicula;
+                nombre_Categoria[i][1] = categoria;
+                id_anio_prestamo[i][0] = generarIdPeliculas();
+                id_anio_prestamo[i][1] = anioPelicula;
+                id_anio_prestamo[i][2] = 0;
+                disponible[i] = true;
+                break;
+            }
+        }
+        
+
+    }
+
+
+
+    public int generarIdPeliculas(){
+        int ID = 0;
+       for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+        ID = (int)(Math.random()*(100-1)+1);
+           if (id_anio_prestamo[i][0]!=ID &&  id_anio_prestamo[i][0] == 0) {   
+               break;
+           }
+       }  
+        return ID;
+    }
+
     public void prestamoPeliculas() {
 
         mostrarClientes();
@@ -93,6 +131,7 @@ public class Memorabilia {
 
         if (tienePeliculaPrestado[numCliente-1] == false) {
             imprimirPeliculasDisponibles();
+            System.out.println("\nEscriba el numero de la pelicula: ");
             int numPelicula = scan.nextInt();
             System.out.print("Escriba numero de dias a prestar: ");
             int numDias = scan.nextInt();
@@ -120,6 +159,7 @@ public class Memorabilia {
                 pelicula_cliente[i][0] = nombre_Categoria[indicePelicula][0];
                 pelicula_cliente[i][1] = nombreClientes[indiceCliente];
             }
+            break;
         }
         
     }
