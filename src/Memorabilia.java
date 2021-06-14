@@ -54,7 +54,7 @@ public class Memorabilia {
         idPel_Anio_Prestamo[3][2] = 0;
 
         disponible [0] = true;
-        disponible [1] = false;
+        disponible [1] = true;
         disponible [2] = true;
         disponible [3] = true;
 
@@ -63,6 +63,26 @@ public class Memorabilia {
         categoriasPelis[2] = "Comedia";        
         categoriasPelis[3] = "Terror";
         categoriasPelis[4] = "Romantica";
+
+        nombreClientes[0] = "Katniss Everdeen";
+        nombreClientes[1] = "Peeta Mellark";
+        nombreClientes[2] = "Coriolanus Snow";
+        nombreClientes[3] = "Senna";
+
+        tienePeliculaPrestado[0] = false;
+        tienePeliculaPrestado[1] = false;
+        tienePeliculaPrestado[2] = false;    
+        tienePeliculaPrestado[3] = false;
+    
+        idClnt_Tel[0][0] = 10000;
+        idClnt_Tel[1][0] = 10001;
+        idClnt_Tel[2][0] = 10002;
+        idClnt_Tel[3][0] = 10003; 
+        
+        idClnt_Tel[0][1] = 77610000;
+        idClnt_Tel[1][1] = 77610001;
+        idClnt_Tel[2][1] = 77610002;
+        idClnt_Tel[3][1] = 77610003; 
 
         iniciarMenu();
     }
@@ -84,32 +104,33 @@ public class Memorabilia {
             System.out.println(  "  9. Salir");
             System.out.print(    "Escribe el numero de la opcion que eliges: ");
             opcion = scan.nextInt();
+            scan.nextLine();
 
             switch (opcion) {
                 case 1:
-                    //prestamoPeliculas();
+                    prestamoPeliculas();
                     break;
                 case 2:
-                    //devolucionPeliculas();
+                    devolucionPeliculas();
                     break;
                 case 3:
                     mostrarPeliculas("Peliculas");
                     break;
                 case 4:
-                    //ingresarPeliculas();
+                    ingresarPeliculas();
                     break;
                 case 5:
                     ordenarNombresPeliculas();
                     mostrarPeliculas("Peliculas");
                     break;
                 case 6:
-                    //ingresarClientes():
+                    ingresarClientes();
                     break;
                 case 7:
-                    //mostrar clientes();   
+                    mostrarClientes();   
                     break;
                 case 8:
-                    //reportes();  
+                    reportes();  
                     break;
                 case 9:
                     System.out.println("\n");
@@ -124,16 +145,20 @@ public class Memorabilia {
     }
 
     public void ingresarClientes(){
-        System.out.print("Ingrese su nombre: ");
+        System.out.print("\nIngrese el nombre del Cliente: ");
         String cliente = scan.nextLine();
 
         for(int i = 0; i<CANTIDAD_CLIENTES;i++ ){
             if(nombreClientes[i] == null){
                 nombreClientes[i] = cliente;
-                System.out.print("Ingrese su telefono: ");
+                System.out.print("Ingrese el numero de telefono: ");
                 idClnt_Tel[i][1] = scan.nextInt();
                 idClnt_Tel[i][0] = generarID(99999, 10000);  
-                tienePeliculaPrestado[i] = false; 
+                tienePeliculaPrestado[i] = false;
+
+                System.out.println("\nCliente ingresado exitosamente!");
+                System.out.println((i+1)+".  ID: "+idClnt_Tel[i][0]+",   Nombre: "+nombreClientes[i]+",   Telefono: "+idClnt_Tel[i][1]+",  Estado de Prestamo: " + asignarEstado(tienePeliculaPrestado[i], "Activo", "No Activo")); 
+                break;
             }
         }
     }
@@ -421,16 +446,16 @@ public class Memorabilia {
             String[][] pelicula_cliente = new String[30][2]; // Nombre Películas, Nombre Cliente;
         */
         for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
-            if (disponible[i] == true) {
+            if (disponible[i] == false && nombrePel_Categoria[i][0] != null && nombreClientes[i] != null) {
                 System.out.println("Nombre: " + nombrePel_Categoria[i][0] + " Cliente: " + nombreClientes[i] + " ID CLIENTE: "
                         + idClnt_Tel[i][0]);
             }
 
         }
         System.out.println("Ingrese el ID del cliente");
-        int idcliente = scan.nextInt();
+        int idCliente = scan.nextInt();
         for (int i = 0; i < disponible.length; i++) {
-            if (idcliente == idClnt_Tel[i][0]) {
+            if (idCliente == idClnt_Tel[i][0]) {
                 disponible[i] = true;
                 tienePeliculaPrestado[i] = false;
 
