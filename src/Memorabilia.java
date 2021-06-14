@@ -222,9 +222,10 @@ public class Memorabilia {
         */
         System.out.println("\nREPORTES");
         System.out.println("1. Cantidad de Peliculas por Categoria");
-        System.out.println("2. Peliculas por Categoria");
+        System.out.println("2. Peliculas por Categoria Especifica");
         System.out.println("3. Cantidad de Prestamos por Pelicula");
         System.out.println("4. Pelicula Mas Prestada y Pelicula Menos Prestada");
+        System.out.print("Seleccione una opcion: ");
         int opcionReporte = scan.nextInt();
         scan.nextLine();
 
@@ -235,7 +236,7 @@ public class Memorabilia {
                 contadoresCategorias(contadores);
                 break;
             case 2:
-                System.out.println("\nPeliculas por Categoria");
+                System.out.println("\nPeliculas por Categoria Especifica");
                 buscarCategoriaEspecifica();   
                 break;
             case 3:
@@ -267,37 +268,43 @@ public class Memorabilia {
 
         String categ = asignarCategoria();
 
-        System.out.println("Categoria de Pelicula: "+categ);
+        System.out.println("\nCategoria de Pelicula: "+categ);
 
+        int contador=0;
         for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
-            if (nombrePel_Categoria[i][1].equals(categ)) {
-                System.out.println(nombrePel_Categoria[i][1]);
+            if (nombrePel_Categoria[i][1] != null && nombrePel_Categoria[i][1].equals(categ)) {
+                System.out.println(" -> "+nombrePel_Categoria[i][0]);
+                contador++;           
             }
         }
+
+        if (contador==0) {
+            System.out.println("   Aun no hay peliculas de esta categoria.");
+        }  
     }
 
     public void contadoresCategorias(int[] contadores){
-
+/*
         for (int i = 0; i < contadores.length; i++) {
-            contadores[i]=0;
+            contadores[i] = 0;
         }
-
+*/
         for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
-            if (nombrePel_Categoria[i][1].equals(categoriasPelis[0])) {
+            if (nombrePel_Categoria[i][1] != null && nombrePel_Categoria[i][1].equals(categoriasPelis[0])) {
                 contadores[0]++;
-            } else if (nombrePel_Categoria[i][1].equals(categoriasPelis[1])) {
+            } else if (nombrePel_Categoria[i][1] != null && nombrePel_Categoria[i][1].equals(categoriasPelis[1])) {
                 contadores[1]++;
-            } else if (nombrePel_Categoria[i][1].equals(categoriasPelis[2])) {
+            } else if (nombrePel_Categoria[i][1] != null && nombrePel_Categoria[i][1].equals(categoriasPelis[2])) {
                 contadores[2]++;
-            } else if (nombrePel_Categoria[i][1].equals(categoriasPelis[3])) {
+            } else if (nombrePel_Categoria[i][1] != null && nombrePel_Categoria[i][1].equals(categoriasPelis[3])) {
                 contadores[3]++;
-            } else if (nombrePel_Categoria[i][1].equals(categoriasPelis[4])) {
+            } else if (nombrePel_Categoria[i][1] != null && nombrePel_Categoria[i][1].equals(categoriasPelis[4])) {
                 contadores[4]++;
             }
         }
 
+        System.out.println();
         for (int i = 0; i < contadores.length; i++) {
-            System.out.println();
             System.out.println(categoriasPelis[i]+":   "+contadores[i]);
         }
 
