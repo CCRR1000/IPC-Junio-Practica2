@@ -226,6 +226,7 @@ public class Memorabilia {
         System.out.println("3. Cantidad de Prestamos por Pelicula");
         System.out.println("4. Pelicula Mas Prestada y Pelicula Menos Prestada");
         int opcionReporte = scan.nextInt();
+        scan.nextLine();
 
         switch (opcionReporte) {
             case 1:
@@ -276,6 +277,10 @@ public class Memorabilia {
     }
 
     public void contadoresCategorias(int[] contadores){
+
+        for (int i = 0; i < contadores.length; i++) {
+            contadores[i]=0;
+        }
 
         for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
             if (nombrePel_Categoria[i][1].equals(categoriasPelis[0])) {
@@ -399,8 +404,9 @@ public class Memorabilia {
                 
                 pelicula_cliente[i][0] = nombrePel_Categoria[indicePelicula][0];
                 pelicula_cliente[i][1] = nombreClientes[indiceCliente];
+                break;
             }
-            break;
+            
         }
         
     }
@@ -444,21 +450,43 @@ public class Memorabilia {
             //Préstamos
             int[][] prestamos = new int[30][3];  // ID Películas, ID Clientes, Número de días que se prestará
             String[][] pelicula_cliente = new String[30][2]; // Nombre Películas, Nombre Cliente;
+
+            // 1. Poner otra columna que indique si ya devolvio (int) u otro arreglo booleano para prestamos
+            // 2. borrar la fila del prestamo despues de devolver
         */
-        for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
+
+
+        for (int i = 0; i < prestamos.length; i++) {
+            if (pelicula_cliente[i][0] != null) {
+                System.out.println("Numero de Prestamo: "+(i+1)+"   Pelicula: " + pelicula_cliente[i][0] + "   Cliente: " + pelicula_cliente[i][1] + "   ID CLIENTE: "
+                        + prestamos[i][1]);
+            }
+/*
             if (disponible[i] == false && nombrePel_Categoria[i][0] != null && nombreClientes[i] != null) {
-                System.out.println("Nombre: " + nombrePel_Categoria[i][0] + " Cliente: " + nombreClientes[i] + " ID CLIENTE: "
-                        + idClnt_Tel[i][0]);
+                System.out.println("Numero de Prestamo: "+(i+1)+"   Pelicula: " + pelicula_cliente[i][0] + "   Cliente: " + pelicula_cliente[i][1] + "   ID CLIENTE: "
+                        + prestamos[i][1]);
+            }
+ */                        //2 panda     2 peeta 
+        }
+
+        System.out.print("\nIngrese el numero de prestamo: ");
+        int numPrestamo = scan.nextInt();
+        prestamos[numPrestamo-1][2] = 0;
+
+        for (int i = 0; i < CANTIDAD_CLIENTES; i++) {
+            if (prestamos[numPrestamo-1][1] == idClnt_Tel[i][0]) {
+                tienePeliculaPrestado[i] = false;
+                prestamos[numPrestamo-1][1] = 0;
+                break;
             }
 
         }
-        System.out.println("Ingrese el ID del cliente");
-        int idCliente = scan.nextInt();
-        for (int i = 0; i < disponible.length; i++) {
-            if (idCliente == idClnt_Tel[i][0]) {
-                disponible[i] = true;
-                tienePeliculaPrestado[i] = false;
 
+        for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+            if (prestamos[numPrestamo-1][0] == idPel_Anio_Prestamo[i][0]) {
+                disponible[i] = true;
+                prestamos[numPrestamo-1][0] = 0;
+                break;
             }
 
         }
