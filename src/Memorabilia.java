@@ -247,13 +247,13 @@ public class Memorabilia {
             case 4:
                 String masPrestada = "", menosPrestada = "";
                 manejarCategoria(masPrestada, menosPrestada);
-            
+            /*
                 System.out.println("\nPelicula Mas Prestada: " + masPrestada);
                 // buscar el elemento mayor -for-
             
                 System.out.println("\nPelicula Menos Prestada: " + menosPrestada);
                 // buscar el elemento menor -for-
-    
+    */
                 break;
             default:
                 System.out.println("Numero incorrecto");
@@ -322,16 +322,26 @@ public class Memorabilia {
         int mayor=0, menor=100;
 
         for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
-            if (idPel_Anio_Prestamo[i][2]>mayor) {
-                mayor = idPel_Anio_Prestamo[i][2];
-                masPrestada = nombrePel_Categoria[i][0];
-            }
 
-            if (idPel_Anio_Prestamo[i][2]<menor) {
-                menor = idPel_Anio_Prestamo[i][2];
-                menosPrestada = nombrePel_Categoria[i][0];
+            if(nombrePel_Categoria[i][0] != null) {
+
+                if (idPel_Anio_Prestamo[i][2] != 0 && idPel_Anio_Prestamo[i][2] > mayor) {
+                    mayor = idPel_Anio_Prestamo[i][2];
+                    masPrestada = nombrePel_Categoria[i][0];
+                }
+
+                if (idPel_Anio_Prestamo[i][2] < menor) {
+                    menor = idPel_Anio_Prestamo[i][2];
+                    menosPrestada = nombrePel_Categoria[i][0];
+                }
             }
         }
+
+        System.out.println("\nPelicula Mas Prestada: " + masPrestada);
+        // buscar el elemento mayor -for-
+    
+        System.out.println("\nPelicula Menos Prestada: " + menosPrestada);
+        // buscar el elemento menor -for-
     }
 
     public void ordenarNombresPeliculas() {
