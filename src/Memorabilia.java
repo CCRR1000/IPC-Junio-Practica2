@@ -1,3 +1,5 @@
+package src;
+
 import java.util.*;
 
 public class Memorabilia {
@@ -400,7 +402,7 @@ public class Memorabilia {
         System.out.println(  " 2. Peliculas por Categoria Especifica");
         System.out.println(  " 3. Cantidad de Prestamos por Pelicula");
         System.out.println(  " 4. Pelicula Mas Prestada");
-        System.out.println(  " 4. Pelicula Menos Prestada");
+        System.out.println(  " 5. Pelicula Menos Prestada");
         System.out.print(    "Seleccione una opcion: ");
         int opcionReporte = scan.nextInt();
         scan.nextLine();
