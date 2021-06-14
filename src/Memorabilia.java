@@ -399,7 +399,8 @@ public class Memorabilia {
         System.out.println(  " 1. Cantidad de Peliculas por Categoria");
         System.out.println(  " 2. Peliculas por Categoria Especifica");
         System.out.println(  " 3. Cantidad de Prestamos por Pelicula");
-        System.out.println(  " 4. Pelicula Mas Prestada y Pelicula Menos Prestada");
+        System.out.println(  " 4. Pelicula Mas Prestada");
+        System.out.println(  " 4. Pelicula Menos Prestada");
         System.out.print(    "Seleccione una opcion: ");
         int opcionReporte = scan.nextInt();
         scan.nextLine();
@@ -419,8 +420,10 @@ public class Memorabilia {
                 mostrarPrestamosPorPelicula();
                 break;
             case 4:
-                String masPrestada = "", menosPrestada = "";
-                valoresLimitePrestamos(masPrestada, menosPrestada);
+                hallarPeliMasPrestada();
+                break;
+            case 5:
+                hallarPeliMenosPrestada();
                 break;
             default:
                 System.out.println("Numero incorrecto");
@@ -481,27 +484,34 @@ public class Memorabilia {
 
     }
 
-    public void valoresLimitePrestamos(String masPrestada, String menosPrestada) {
-        int mayor=0, menor=1000;
+    public void hallarPeliMasPrestada() {
+        int mayor=0;
+        String masPrestada="";
 
         for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
-
-            if(nombrePel_Categoria[i][0] != null) {
-
-                if (idPel_Anio_Prestamo[i][2] != 0 && idPel_Anio_Prestamo[i][2] > mayor) {
+            if(nombrePel_Categoria[i][0] != null && idPel_Anio_Prestamo[i][2] > mayor) {
                     mayor = idPel_Anio_Prestamo[i][2];
                     masPrestada = nombrePel_Categoria[i][0];
-                }
-
-                if (idPel_Anio_Prestamo[i][2] < menor) {
-                    menor = idPel_Anio_Prestamo[i][2];
-                    menosPrestada = nombrePel_Categoria[i][0];
-                }
             }
         }
+        System.out.println("\n - Pelicula Mas Prestada -");
+        System.out.println("\n     -> " + masPrestada);    
+        
+    }
 
-        System.out.println("\nPelicula Mas Prestada: " + masPrestada);    
-        System.out.println("\nPelicula Menos Prestada: " + menosPrestada);
+    public void hallarPeliMenosPrestada() {
+        
+        int menor=1000;
+        String menosPrestada="";
+
+        for (int i = 0; i < CANTIDAD_PELICULAS; i++) {
+            if(nombrePel_Categoria[i][0] != null && idPel_Anio_Prestamo[i][2] < menor) {
+                    menor = idPel_Anio_Prestamo[i][2];
+                    menosPrestada = nombrePel_Categoria[i][0];
+            }
+        }  
+        System.out.println("\n - Pelicula Menos Prestada -");
+        System.out.println("\n     -> " + menosPrestada);
 
     }
 
